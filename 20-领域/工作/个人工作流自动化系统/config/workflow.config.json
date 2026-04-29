@@ -1,0 +1,108 @@
+﻿{
+  "version": "1.1.0",
+  "startDate": "2026-04-26",
+  "principles": [
+    "规则大于系统",
+    "信息单向流动",
+    "单一归属",
+    "重要操作先二次确认"
+  ],
+  "roles": {
+    "qclaw": {
+      "position": "微信唯一收口、碎片信息处理器、系统入口",
+      "mustDo": [
+        "接收微信转发信息",
+        "按分类做初步归类",
+        "发送每日、每3天、每周、每季度提醒",
+        "执行简单指令前先二次确认"
+      ],
+      "mustNotDo": [
+        "不做深度内容整理",
+        "不直接修改飞书、Obsidian、IMA",
+        "不保存超过30天未分拣信息",
+        "不执行未经确认的自动化操作"
+      ]
+    },
+    "codex": {
+      "position": "文本处理工具、脚本生成器、批量内容处理器",
+      "mustDo": [
+        "转换和整理文本内容",
+        "生成简单辅助脚本",
+        "每周整理工作碎片",
+        "每两周转换 AI 对话记录"
+      ],
+      "mustNotDo": [
+        "不做信息主入口",
+        "不直接操作外部工具内容",
+        "不生成复杂自动化流程",
+        "不执行未经确认的自动化操作"
+      ]
+    }
+  },
+  "categories": [
+    "📥待分拣",
+    "📅待办事项",
+    "💼工作碎片",
+    "📁临时文件",
+    "💡灵感记录"
+  ],
+  "confirmation": {
+    "requiredReplies": ["确认", "是"],
+    "timeoutHours": 24,
+    "template": "即将执行以下操作：\n[详细说明操作内容]\n是否确认执行？（回复\"确认\"执行，回复其他内容取消）"
+  },
+  "retention": {
+    "tempFileDays": 7,
+    "untriagedMaxDays": 30
+  },
+  "reminders": [
+    {
+      "id": "qclaw-daily-inbox",
+      "owner": "qclaw",
+      "type": "daily",
+      "time": "21:00",
+      "enabled": true,
+      "message": "今日QCLAW待分拣：X条，请花1分钟快速处理"
+    },
+    {
+      "id": "qclaw-every-3-days-deep-sort",
+      "owner": "qclaw",
+      "type": "every_3_days",
+      "time": "21:00",
+      "enabled": true,
+      "message": "QCLAW已3天未深度分拣，当前待处理：X条，请花5分钟处理"
+    },
+    {
+      "id": "qclaw-weekly-fragment-review",
+      "owner": "qclaw",
+      "type": "weekly",
+      "time": "Sunday 20:00",
+      "enabled": true,
+      "message": "本周工作碎片已积累X条，是否需要批量整理？"
+    },
+    {
+      "id": "codex-biweekly-ai-export",
+      "owner": "codex",
+      "type": "biweekly",
+      "time": "Sunday 20:00",
+      "enabled": true,
+      "message": "是否需要导出并转换最近两周的AI平台对话记录？"
+    },
+    {
+      "id": "qclaw-quarterly-cleanup",
+      "owner": "qclaw",
+      "type": "quarterly",
+      "time": "20:00",
+      "enabled": true,
+      "message": "知识库清理提醒：请清理Obsidian和IMA中的低价值内容"
+    },
+    {
+      "id": "qclaw-monthly-review",
+      "owner": "qclaw",
+      "type": "monthly",
+      "time": "20:00",
+      "enabled": true,
+      "message": "本月工作流运行情况：处理微信信息：X条；批量整理：X次；导出AI对话：X次；提醒发送：X次。是否需要调整工作流规则？"
+    }
+  ]
+}
