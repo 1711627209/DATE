@@ -1,6 +1,7 @@
 # Ignore everything by default
 /*
 !.gitignore
+!.gitattributes
 !/00-收件箱/
 !/20-领域/
 /00-收件箱/*
