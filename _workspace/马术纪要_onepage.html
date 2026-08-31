@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+  @page { size: A4; margin: 15mm 14mm; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Noto Serif SC", "Source Han Serif SC", "思源宋体", "SimSun", serif;
+    font-size: 10pt; line-height: 1.5; color: #1a1a1a;
+  }
+  .header { border-bottom: 2px solid #1a1a1a; padding-bottom: 5px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: baseline; }
+  .header h1 { font-size: 14pt; font-weight: 700; letter-spacing: 0.5px; }
+  .header .meta { font-size: 8pt; color: #555; text-align: right; line-height: 1.4; }
+  .section { margin-bottom: 7px; }
+  .section-title { font-size: 9pt; font-weight: 700; color: #fff; background: #333; padding: 2px 6px; border-radius: 1px; display: inline-block; margin-bottom: 3px; }
+  table { width: 100%; border-collapse: collapse; font-size: 8.5pt; margin-bottom: 5px; }
+  th { background: #eee; padding: 2px 5px; text-align: left; font-weight: 600; border: 1px solid #ccc; font-size: 8pt; }
+  td { padding: 2px 5px; border: 1px solid #ddd; vertical-align: top; font-size: 8.5pt; }
+  .tag { display: inline-block; padding: 0 4px; border-radius: 1px; font-size: 7pt; font-weight: 600; }
+  .tag-warn { background: #fff3cd; color: #856404; border: 1px solid #ffc107; }
+  .tag-done { background: #d4edda; color: #155724; border: 1px solid #28a745; }
+  .tag-pause { background: #e2e3e5; color: #383d41; border: 1px solid #6c757d; }
+  .tag-todo { background: #f8d7da; color: #721c24; border: 1px solid #dc3545; }
+  .footer { margin-top: 6px; padding-top: 3px; border-top: 1px solid #ddd; font-size: 7pt; color: #999; text-align: center; }
+  .spec-line { font-size: 8pt; color: #444; margin-top: 2px; }
+  .spec-line strong { color: #1a1a1a; }
+  .decision-row { display: flex; gap: 6px; margin-bottom: 3px; }
+  .decision-item { flex: 1; background: #fafafa; padding: 2px 5px; border-left: 2px solid #333; font-size: 8pt; }
+  .todo-item { padding: 1px 0; font-size: 8.5pt; border-bottom: 1px dotted #eee; display: flex; gap: 4px; }
+  .todo-item:last-child { border-bottom: none; }
+  .todo-id { color: #999; min-width: 14px; }
+  .todo-meta { color: #888; min-width: 60px; text-align: right; font-size: 8pt; }
+  .insight-row { display: flex; gap: 6px; }
+  .insight-item { flex: 1; background: #f5f5f5; padding: 3px 6px; font-size: 8pt; line-height: 1.4; border-left: 2px solid #333; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>马术拍摄测试复盘 — 一页纪要</h1>
+  <div class="meta">
+    2026-08-31 17:48 · 42分钟<br>
+    参会：孙超、玉成、算法团队<br>
+    <a href="https://gpqclt7j45.feishu.cn/minutes/obcnq3k64sv8jntzo9kc81k8">飞书妙记 →</a>
+  </div>
+</div>
+
+<!-- 测试数据 -->
+<div class="section">
+  <span class="section-title">一、测试数据与问题</span>
+  <table>
+    <tr><th style="width:22%">问题</th><th style="width:38%">现象 / 根因</th><th style="width:15%">严重度</th><th style="width:25%">当前状态</th></tr>
+    <tr>
+      <td>双镜头调度卡顿</td>
+      <td>未现场重做标定，沿用深圳华侨城剧场旧数据，适配东莞马场后动作不流畅</td>
+      <td><span class="tag tag-todo">高</span></td>
+      <td>待修复</td>
+    </tr>
+    <tr>
+      <td>暗光目标识别率低</td>
+      <td>阴天室内，YOLO 对远处小目标（马匹）锁定成功率低，仅近处可行</td>
+      <td><span class="tag tag-warn">中</span></td>
+      <td>待优化</td>
+    </tr>
+    <tr>
+      <td>广角镜头观测盲区</td>
+      <td>室内马场墙体高，无天然高地；广角镜头无法覆盖全场</td>
+      <td><span class="tag tag-warn">中</span></td>
+      <td>待解决</td>
+    </tr>
+    <tr>
+      <td>激光测距配重失衡</td>
+      <td>加装后云台配重改变，出现乱转现象，POC 阶段无法验证价值</td>
+      <td><span class="tag tag-pause">低</span></td>
+      <td>暂搁置</td>
+    </tr>
+  </table>
+  <p class="spec-line"><strong>全画幅对照测试：</strong>28-200mm 长焦端 60 米拍马匹出片勉强，手持无法稳定跟拍，必须搭配专业云台。专业摄影师标准配置为 70-600mm + 三脚架 + 机位 ≥3m。ZR30 画幅约为全画幅 1/5，同等条件下照片模式不可用，视频模式可满足基础需求。</p>
+</div>
+
+<!-- 决策 -->
+<div class="section">
+  <span class="section-title">二、决策结论</span>
+  <div class="decision-row">
+    <div class="decision-item"><strong>场景策略：</strong>优先攻克光线充足的单马训练高频场景；暗光、多目标遮挡等极端场景后置，不投入当前资源。</div>
+    <div class="decision-item"><strong>功能优先级：</strong>变焦跟拍稳定性（基线能力）优先保障；大师镜头（事件触发固定时长特写）作为差异化亮点，不做全量动作覆盖。</div>
+    <div class="decision-item"><strong>算法方向：</strong>利用马术运动轨迹固定的特性，收敛路径搜索范围，降低识别难度；不追求全场景泛化能力。</div>
+    <div class="decision-item"><strong>演示方案：</strong>算法迭代为主，Xbox 手柄人工手控为辅采集参数；遥控操作仅作为 POC 兜底，不对外宣传。</div>
+  </div>
+</div>
+
+<!-- 待办 -->
+<div class="section">
+  <span class="section-title">三、行动项</span>
+  <div class="todo-item"><span class="todo-id">01</span><span>样片资料发送：将运动摄影参数（快门≥300、光圈f5.6、全画幅、ISO&gt;1万）下阴天马匹照片发至群内</span><span class="todo-meta">@孙超 · 今日</span></div>
+  <div class="todo-item"><span class="todo-id">02</span><span>威廉马场驻场：携带设备前往，每日输出测试日志同步浩哥，同步调研专业摄影师操作逻辑</span><span class="todo-meta">@孙超+玉成 · 明日</span></div>
+  <div class="todo-item"><span class="todo-id">03</span><span>遥控方案资料整理：将相关文档、接口数据及产出内容打包发至群内</span><span class="todo-meta">@算法团队 · 尽快</span></div>
+  <div class="todo-item"><span class="todo-id">04</span><span>金伯乐场地对接：确认深圳金伯乐马场（距公司 40 分钟）是否可作为备选测试点</span><span class="todo-meta">@鹏博 · 尽快</span></div>
+  <p class="spec-line" style="margin-top:3px;"><strong>场地策略：</strong>以学员拍摄出片换取威廉马场长期使用权，降低对接成本。</p>
+</div>
+
+<!-- 技术要点 -->
+<div class="section">
+  <span class="section-title">四、技术要点</span>
+  <div class="insight-row">
+    <div class="insight-item"><strong>标定：</strong>换场地必须重做双镜头标定，历史数据不可复用。旧数据直接套用是导致调度卡顿的直接原因。</div>
+    <div class="insight-item"><strong>画幅对比：</strong>ZR30 传感器面积约为全画幅的 1/5，暗光信噪比差距显著。照片模式在 ISO 破万时不可用，视频模式尚可满足基础需求。</div>
+    <div class="insight-item"><strong>POC 策略：</strong>高频场景打透比全场景覆盖更有价值。先让系统"能用"，再迭代"好用"，避免资源无意义消耗在极端场景。</div>
+    <div class="insight-item"><strong>数据闭环：</strong>孙超现场采集日志+操作数据 → 算法团队远程迭代 → 每日同步验证，形成测试-开发快速闭环。</div>
+  </div>
+</div>
+
+<div class="footer">
+  整理：Agnes · 2026-08-31 · 原始逐字稿存飞书妙记 obcnq3k64sv8jntzo9kc81k8
+</div>
+
+</body>
+</html>
